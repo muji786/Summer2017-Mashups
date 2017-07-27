@@ -1,71 +1,49 @@
-/*
-Modified from:
-NYU - MASHUPS CLASS
-gihtub.com/craigprotzel/Mashups
-
-WIKIPEDIA SEARCH - EXAMPLE #3
-Wikipedia API Reference - http://www.mediawiki.org/wiki/API:Main_page
-
-This example will search Wikipedia for a user submitted entry
-And then populate those results on the page using the jQuery 'append' function
-*/
-
 var app = {
-	wikiURL: "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=",
+	itpURL: "https://itp.nyu.edu/ranch/api/itp-yearbook/",
 
 	initialize: function() {
-		//Use jQuery to assign a callback function when the 'search' button is clicked
 		$("#search").click(function(){
 			console.log("Clicked search");
-			//Clear the div
 			$("#resultsTarget").html("");
-			//Use jQuery to get the value of the 'query' input box
 			var newSearchTerm = $("#query").val();
 			console.log(newSearchTerm);
-			//Execute the Wikipedia API call with the 'newSearchTerm' string as its argument 
-			app.searchWikipedia(newSearchTerm);
+			app.itpSearch(newSearchTerm);
 		});
 
-		//What if someone just wants to click "ENTER"?
-		//Use jQuery to assign a callback function when enter is pressed 
-		//This will ONLY work when the 'query' input box is active
 		$("#query").keypress(function(e){
-			//console.log(e);
-			//If enter key is pressed
 			if (e.which == 13){
-				//Use jQuery's trigger() function to execute the click event
 				$("#search").trigger('click');
 			}
 		});
 	},
 
-	searchWikipedia: function(searchTerm) {
+	itpSearch: function(searchTerm) {
+		currentYear = new Date().getFullYear() + 2;
+		if (searchTerm == "" || searchTerm < 1981 || searchTerm > currentYear)
+		{
+			searchTerm = currentYear;
+		}
 		$.ajax({
-			url: this.wikiURL + searchTerm,
+			url: this.itpURL + searchTerm,
 			type: 'GET',
-			dataType: 'jsonp',
+			dataType: 'json',
 			error: function(data){
 				console.log("We got problems");
 				//console.log(data.status);
 			},
 			success: function(data){
 				console.log("WooHoo!");
-				//Check the browser console to see the returned data
 				console.log(data);
-				//Use jQuery to insert the search term into the appropriate DOM element
-				//The data we want is the first item in the returned JSON, hence value "0"
-				$("#searchTerm").html(data[0]);
+				$("#searchTerm").html("Class of " + searchTerm);
 
-				//The results data we want is the second item in the returned JSON, hence value "1"
-				//Create a var to save the array of search results 
-				var searchResults = data[1];
+					var htmlString = '';
+					var len = data.length;
 				var urlResults = data[3];
 				//Loop through the array of results
-				for (var i = 0; i < searchResults.length; i++){
-					var htmlString =	"<p class='wikiResults'>" +
-											"<a href=" + urlResults[i] + ">" + searchResults[i] + "</a>" +
+				for (var i = 0; i < len; i++){
+					htmlString =	"<p class='itpResults'>" +
+											data[i].name +
 										"</p>";
-					//Use jQuery's append() function to add the searchResults to the DOM
 					$("#resultsTarget").append(htmlString);
 				}
 			}
@@ -78,4 +56,4 @@ var app = {
 $(document).ready(function(){
 	console.log("LOADED!!!!");
 	app.initialize();
-});		
+});
