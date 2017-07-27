@@ -1,4 +1,5 @@
 var app = {
+	
 	itpURL: "https://itp.nyu.edu/ranch/api/itp-yearbook/",
 
 	initialize: function() {
@@ -38,9 +39,9 @@ var app = {
 
 					var htmlString = '';
 					var len = data.length;
-				var urlResults = data[3];
+					var urlResults = data[3];
 				//Loop through the array of results
-				for (var i = 0; i < len; i++){
+					for (var i = 0; i < len; i++){
 					htmlString =	"<p class='itpResults'>" +
 											data[i].name +
 										"</p>";
@@ -51,9 +52,8 @@ var app = {
 	}
 }
 
-
 //Code to be executed once the page has fully loaded
 $(document).ready(function(){
-	console.log("LOADED!!!!");
+		console.log("LOADED!!!!");
 	app.initialize();
 });
