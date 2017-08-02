@@ -2,8 +2,9 @@ html{
 	margin: 0;
 	padding: 0;
 	background-color: white;
-	font-family: 'Helvetica', Geneva, Verdana, Arial, sans-serif;
+	font-family: "Verdana";
 	font-size: 24px;
+	text-align: center;
 }
 
 input{
@@ -29,9 +30,11 @@ button:hover{
 }
 
 #searchTerm{
-	width: 30%;
+	color:#4B0082;
+	width: 100% auto;
+	font-size: 36px;
 	text-align: center;
-	margin: 5px auto;
+	margin: 15px auto;
 }
 
 .itpResults{
@@ -45,9 +48,5 @@ button:hover{
 
 .itpResults:hover{
 	background-color: rgb(107, 255, 124);
-	color:#4B0082;
-}
-
-h2 {
 	color:#4B0082;
 }

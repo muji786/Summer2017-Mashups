@@ -8,10 +8,10 @@
 	</head>
 
 	<body>
-		<h2>ITP Year Book Search</h2>
+		<h1>ITP Year Book Search</h1>
 		<input id="query" type="text" placeholder="Enter Year here"></input>
 		<button class="aButton" id="search">ENTER</button>
-		<h1 id="searchTerm"></h1>
+		<div id="searchTerm"></div>
 		<div id="resultsTarget"></div>
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -19,7 +19,6 @@
 		<script>
 			//Code to be executed once the page has fully loaded
 			$(document).ready(function(){
-				console.log("LOADED!!!!");
 				app.initialize();
 			});
 
