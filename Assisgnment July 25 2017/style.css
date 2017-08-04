@@ -1,52 +1,50 @@
-html{
-	margin: 0;
-	padding: 0;
-	background-color: white;
-	font-family: "Verdana";
-	font-size: 24px;
-	text-align: center;
+html {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: "Verdana";
+    font-size: 24px;
+    text-align: center;
 }
-
-input{
-	font-size: 24px;
-	line-height: 30px;
-	height: 30px
+input {
+    font-size: 24px;
+    line-height: 30px;
+    height: 30px
 }
-
-button{
-	text-align: center;
-	font-weight: bold;
-	font-size: 20px;
-	height: 40px;
-	width: 120px;
-	margin-top: 10px;
-	border: 2px none;
-	border-radius: 10px;
+button {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    height: 40px;
+    width: 120px;
+    margin-top: 10px;
+    border: 2px none;
+    border-radius: 10px;
 }
-
-button:hover{
-	background-color: rgb(76, 126, 242);
-	color: white;
+button:hover {
+    background-color: rgb(76, 126, 242);
+    color: white;
 }
-
-#searchTerm{
-	color:#4B0082;
-	width: 100% auto;
-	font-size: 36px;
-	text-align: center;
-	margin: 15px auto;
+#searchTerm {
+    color: #4B0082;
+    width: 100% auto;
+    font-size: 36px;
+    text-align: center;
+    margin: 15px auto;
 }
-
-.itpResults{
-	background-color: rgb(255, 100, 127);
-	color:white;
-	text-align: center;
-	padding: 30px;
-	margin: 5px auto;
-	width: 30%;
+.itpResults {
+    background-color: rgb(255, 100, 127);
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin: 5px auto;
+    width: 30%;
 }
-
-.itpResults:hover{
-	background-color: rgb(107, 255, 124);
-	color:#4B0082;
+img {
+    margin: 5px auto;
+    width: 30%;
+}
+.itpResults:hover {
+    background-color: rgb(107, 255, 124);
+    color: #4B0082;
 }
