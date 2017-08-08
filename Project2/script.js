@@ -132,7 +132,7 @@ function runGiphySearch(searchItem) {
     });
 }
 
-function createD3() {
+function createD3() { //inspired by many many many d3 examples out there
     $('#viz').html('');
     var margin = {
             top: 20,
