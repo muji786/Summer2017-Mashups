@@ -51,9 +51,9 @@ img {
 .link {
     fill: none;
     stroke: #4B0082;
-    stroke-width: 4px;
+    stroke-width: 2px;
 }
-.node rect {
+.node circle {
     stroke: black;
     stroke-width: 1;
     fill: #fff;
