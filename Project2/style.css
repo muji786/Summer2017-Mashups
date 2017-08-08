@@ -48,3 +48,16 @@ img {
     background-color: rgb(107, 255, 124);
     color: #4B0082;
 }
+.link {
+    fill: none;
+    stroke: #4B0082;
+    stroke-width: 4px;
+}
+.node rect {
+    stroke: black;
+    stroke-width: 1;
+    fill: #fff;
+}
+.node text {
+    font: 12px sans-serif;
+}
