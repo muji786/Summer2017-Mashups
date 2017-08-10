@@ -32,21 +32,18 @@ button:hover {
     text-align: center;
     margin: 15px auto;
 }
-.itpResults {
-    background-color: rgb(255, 100, 127);
-    color: white;
-    text-align: center;
-    padding: 30px;
-    margin: 5px auto;
-    width: 30%;
+#viz {
+    width: 960px;
+    float: left;
+}
+#giphy {
+    margin-left: 960px;
 }
 img {
-    margin: 5px auto;
-    width: 30%;
-}
-.itpResults:hover {
-    background-color: rgb(107, 255, 124);
-    color: #4B0082;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: -250px;
+    position: fixed;
+    width: 600px;
 }
 .link {
     fill: none;

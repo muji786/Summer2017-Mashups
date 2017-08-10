@@ -1,18 +1,14 @@
 var itpYearBook = "https://itp.nyu.edu/ranch/api/itp-yearbook/";
-var itpProjectsbyYear = "https://itp.nyu.edu/ranch/api/projects-finder-by-class/";
-var itpProjectsperStudent = "https://itp.nyu.edu/ranch/api/projects-finder-by-creator/";
-var itpProjects = "https://itp.nyu.edu/ranch/api/projects/";
-var giphySearch = "https://api.giphy.com/v1/gifs/search?api_key=f83e46e2508b41bd954c4b821e8261ea&limit=1&offset=0&rating=G&lang=en&q=";
+var itpPeople = "https://itp.nyu.edu/ranch/api/people/";
+var giphySearch = "https://api.giphy.com/v1/gifs/search?api_key=f83e46e2508b41bd954c4b821e8261ea&limit=25&offset=0&rating=G&lang=en&q=";
 
 var studentsPerYear = {
     year: "2019",
     children: []
 };
 
-var projectsPerYear = [];
-var projectsPerStudent = [];
-var projectDetails = [];
-var giphy = null;
+var giphyURL = "itp.png";
+var itpPhoto = "itp.png";
 
 function initialize() {
     $("#search").click(function () {
@@ -26,31 +22,12 @@ function initialize() {
             studentsPerYear.year = newSearchTerm;
         }
         itpYearBookSearch(newSearchTerm);
-        createD3();
-        //app.itpProjectsbyYearSearch(newSearchTerm);
     });
 
     $("#query").keypress(function (e) {
         if (e.which == 13) {
             $("#search").trigger('click')
         }
-    });
-
-    $("#resultsTarget").on("click", ".itpResults", function () {
-        var id = $(this).prop("id");
-        var newSearchTerm = $($(id).text());
-        console.log(newSearchTerm);
-        runGiphySearch(newSearchTerm);
-        //            app.itpProjectsperStudentSearch(studentsPerYear[id].netid);
-        //            if (projectsPerStudent.length > 0 && projectsPerStudent != null) {
-        //                for (var i = 0; i < projectsPerStudent.length; i++) {
-        //                    app.itpProjectDetails(projectsPerStudent[i].id);
-        //                    htmlString = "<div class='projectDetails' " + "id ='Project" + i + "'>" + projectDetails[0].name +
-        //                        "</div>";
-        //                    $(this).append(htmlString);
-        //                    console.log("ProjectDetails" + projectDetails);
-        //                        }
-        //}
     });
 }
 
@@ -65,55 +42,7 @@ function itpYearBookSearch(searchTerm) {
         success: function (data) {
             studentsPerYear.children = data;
             $("#searchTerm").html("Class of " + searchTerm + " : " + studentsPerYear.children.length + " students.");
-            //                var htmlString = '';
-            //                for (var i = 0; i < studentsPerYear.length; i++) {
-            //                    htmlString = "<div class='itpResults' " + "id ='" + i + "result'>" +
-            //                        studentsPerYear[i].name +
-            //                        "</div>";
-            //                    $("#resultsTarget").append(htmlString);
-            //app.itpProjectsperStudentSearch(studentsPerYear[i].netid);
-        }
-    });
-}
-
-function itpProjectsbyYearSearch(searchItem) {
-    $.ajax({
-        url: this.itpProjectsbyYear + searchTerm,
-        type: 'GET',
-        dataType: 'json',
-        error: function (data) {
-            $("#searchTerm").html(data);
-        },
-        success: function (data) {
-            projectsPerYear = data;
-        }
-    });
-}
-
-function itpProjectsperStudentSearch(searchItem) {
-    $.ajax({
-        url: this.itpProjectsperStudent + searchItem,
-        type: 'GET',
-        dataType: 'json',
-        error: function (data) {
-            $("#searchTerm").html(data);
-        },
-        success: function (data) {
-            projectsPerStudent = data;
-        }
-    });
-}
-
-function itpProjectDetails(searchItem) {
-    $.ajax({
-        url: this.itpProjects + searchItem,
-        type: 'GET',
-        dataType: 'json',
-        error: function (data) {
-            $("#searchTerm").html(data);
-        },
-        success: function (data) {
-            projectDetails = data;
+            createD3();
         }
     });
 }
@@ -127,7 +56,36 @@ function runGiphySearch(searchItem) {
             $("#searchTerm").html(data);
         },
         success: function (data) {
-            console.log(data);
+            if (data.data.length > 0) {
+                giphyURL = data.data[Math.floor(Math.random() * data.data.length)].images.original.url;
+            } else giphyURL = "itp.png";
+            var img = $("<img />").attr('src', giphyURL).on('load', function () {});
+            $("#giphy").html("How you see yourself...");
+            $("#giphy").empty().append(img);
+
+        }
+    });
+}
+
+function itpPeopleSearch(netid) {
+    $.ajax({
+        url: this.itpPeople + netid + "/details",
+        type: 'GET',
+        dataType: 'json',
+        error: function (data) {
+            $("#searchTerm").html(data);
+        },
+        success: function (data) {
+            console.log(data.misc.photo_url);
+            if (data.misc.photo_url != null) {
+                itpPhoto = data.misc.photo_url;
+                var img = $("<img />").attr('src', "https://itp.nyu.edu/" + itpPhoto).on('load', function () {});
+            } else {
+                itpPhoto = "itp.png";
+                var img = $("<img />").attr('src', itpPhoto).on('load', function () {});
+            }
+            $("#giphy").html("How others see you...");
+            $("#giphy").empty().append(img);
         }
     });
 }
@@ -149,10 +107,6 @@ function createD3() { //inspired by many many many d3 examples out there
 
     var tree = d3.layout.tree();
     tree.size([height, width]);
-    //tree.nodeSize([height, width]);
-    //    tree.separation(function separation(a, b) {
-    //    return (a.parent == b.parent ? 1 : 2) / a.depth;
-    //    });
 
     var diagonal = d3.svg.diagonal()
         .projection(function (d) {
@@ -183,7 +137,9 @@ function createD3() { //inspired by many many many d3 examples out there
     node.append("circle")
         .attr("r", 3.5);
 
-    node.append("text")
+    node.append("text").attr("data-name", function (d, i) {
+            return "name" + i;
+        })
         .attr("x", function (d) {
             return d.children ? -10 : 10;
         })
@@ -193,6 +149,16 @@ function createD3() { //inspired by many many many d3 examples out there
         })
         .text(function (d) {
             return d.name;
+        }).on('click', function (d) {
+            itpPeopleSearch(d.netid);
+            setTimeout(function () {
+                runGiphySearch(d.name);
+            }, 2000);
+
+            d3.select(this)
+                .transition()
+                .attr("fill", "blue")
+                .duration(1000);
         });
 }
 
